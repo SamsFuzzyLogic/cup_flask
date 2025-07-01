@@ -1,5 +1,4 @@
-
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
@@ -12,7 +11,7 @@ from gspread_formatting import CellFormat, Color, TextFormat, format_cell_range
 import re
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY")
+app.secret_key = os.getenv("FLASK_SECRET_KEY")  # securely use from .env or Render secret
 
 def is_valid_email(email):
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
@@ -93,7 +92,24 @@ def index():
 
             sheet.append_row([timestamp, email, entry_name, q1, q2, q3, q4, int(lead_lap)])
             send_confirmation_email(email, entry_name, q1, q2, q3, q4, int(lead_lap))
-            flash("✅ Thank you! Your entry has been received and a confirmation email sent.", "success")
-            return redirect(url_for("index"))
 
+            # ✅ Store in session and redirect
+            session["summary"] = {
+                "name": entry_name,
+                "email": email,
+                "q1": q1,
+                "q2": q2,
+                "q3": q3,
+                "q4": q4,
+                "lead_lap": lead_lap
+            }
+            return redirect(url_for("thank_you"))
     return render_template("form.html")
+
+@app.route("/thank-you")
+def thank_you():
+    summary = session.pop("summary", None)
+    return render_template("thank_you.html", summary=summary)
+
+if __name__ == "__main__":
+    app.run(debug=True)
