@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Thank You!</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="container py-5">
+    <div class="alert alert-success">
+      <h4 class="alert-heading">✅ Thank you, {{ summary.name }}!</h4>
+      <p>
+        We've received your picks. A confirmation has been sent to
+        <strong>{{ summary.email }}</strong>.
+      </p>
+
+      <hr />
+      <h5>Your Cup Car Challenge Picks:</h5>
+      <ul>
+        <li><strong>Chevrolet Driver:</strong> {{ summary.q1 }}</li>
+        <li><strong>Ford Driver:</strong> {{ summary.q2 }}</li>
+        <li><strong>Toyota Driver:</strong> {{ summary.q3 }}</li>
+        <li><strong>Winning Manufacturer:</strong> {{ summary.q4 }}</li>
+        <li><strong>Cars on Lead Lap:</strong> {{ summary.lead_lap }}</li>
+      </ul>
+      <br /><br /><br />
+      <p>Good Luck to you and your team!</p>
+    </div>
+  </body>
+</html>

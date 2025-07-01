@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cup Car Challenge</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: auto;
+        padding: 1rem;
+      }
+      h2 {
+        text-align: center;
+      }
+      label,
+      select,
+      input {
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      ul {
+        padding-left: 1rem;
+        color: crimson;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      input[type="number"] {
+        -moz-appearance: textfield; /* Firefox */
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Cup Car Challenge Survey</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <ul>
+      {% for category, message in messages %}
+      <li><strong>{{ category.title() }}:</strong> {{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+
+    <form method="POST">
+      <label>Name:</label>
+      <input type="text" name="entry_name" required />
+
+      <label>Email:</label>
+      <input type="email" name="email" required />
+
+      <label>Chevrolet Driver:</label>
+      <select name="q1">
+        <option>Ross Chastain</option>
+        <option>Austin Dillon</option>
+        <option>Kyle Larson</option>
+        <option>Justin Haley</option>
+        <option>Kyle Busch</option>
+        <option>Chase Elliott</option>
+        <option>Ty Dillon</option>
+        <option>A.J. Allmendinger</option>
+        <option>William Byron</option>
+        <option>Ricky Stenhouse</option>
+        <option>Alex Bowman</option>
+        <option>Michael McDowell</option>
+        <option>Carson Hocevar</option>
+        <option>Shane Van Gisbergen</option>
+        <option>Daniel Suarez</option>
+      </select>
+
+      <label>Ford Driver:</label>
+      <select name="q2">
+        <option>Austin Cindric</option>
+        <option>Noah Gragson</option>
+        <option>Brad Keselowski</option>
+        <option>Ryan Blaney</option>
+        <option>Chris Buescher</option>
+        <option>Josh Berry</option>
+        <option>Joey Logano</option>
+        <option>Todd Gilliland</option>
+        <option>Zane Smith</option>
+        <option>Cole Custer</option>
+        <option>Ryan Preece</option>
+      </select>
+
+      <label>Toyota Driver:</label>
+      <select name="q3">
+        <option>Denny Hamlin</option>
+        <option>Chase Briscoe</option>
+        <option>Christopher Bell</option>
+        <option>Bubba Wallace</option>
+        <option>Riley Herbst</option>
+        <option>John Hunter Nemechek</option>
+        <option>Erik Jones</option>
+        <option>Tyler Reddick</option>
+        <option>Ty Gibbs</option>
+      </select>
+
+      <label>Winning Manufacturer:</label>
+      <select name="q4">
+        <option>Chevrolet</option>
+        <option>Ford</option>
+        <option>Toyota</option>
+      </select>
+
+      <label>Cars Finishing on Lead Lap (1–37):</label>
+      <input type="number" name="lead_lap" min="1" max="37" required />
+
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
