@@ -35,6 +35,10 @@
     </style>
   </head>
   <body>
+    <div style="text-align: center;">
+      <img src="{{ url_for('static', filename='images/cupcar_logo.png') }}" alt="Cup Car Logo" width="700" />
+    </div>
+    
     <h2>Cup Car Challenge Survey</h2>
 
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
