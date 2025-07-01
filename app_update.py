@@ -1,51 +1,48 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+
+from flask import Flask, render_template, request, redirect, url_for, flash
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 from pytz import timezone, utc
-import os, re, smtplib
+import os
+import json
+import smtplib
 from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from dotenv import load_dotenv
 from gspread_formatting import CellFormat, Color, TextFormat, format_cell_range
+import re
 
-
-
-load_dotenv()
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "fallback_secret_key")
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 def is_valid_email(email):
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
 
 def send_confirmation_email(to_email, name, q1, q2, q3, q4, lead_lap):
-    sender_email = os.getenv("GMAIL_USER")
-    app_password = os.getenv("GMAIL_APP_PASSWORD")
-    msg = MIMEMultipart("alternative")
-    msg["Subject"] = "✅ Cup Car Challenge – Confirmation"
-    msg["From"] = sender_email
-    msg["To"] = to_email
-    html = f"""
-    <html><body>
-    <p>Hi {name},</p>
-    <p>Thanks for participating in the Cup Car Challenge!</p>
-    <ul>
-        <li><strong>Chevrolet Driver:</strong> {q1}</li>
-        <li><strong>Ford Driver:</strong> {q2}</li>
-        <li><strong>Toyota Driver:</strong> {q3}</li>
-        <li><strong>Manufacturer Winner:</strong> {q4}</li>
-        <li><strong>Cars on Lead Lap:</strong> {lead_lap}</li>
-    </ul>
-    <p>🏁 Good luck to you and your crew!</p>
-    </body></html>
+    gmail_user = os.getenv("GMAIL_USER")
+    gmail_password = os.getenv("GMAIL_APP_PASSWORD")
+    subject = "✅ Cup Car Challenge – Confirmation Received"
+    body = f"""
+    Hi {name},
+
+    Thanks for participating in the Cup Car Challenge!
+
+    Your picks:
+    - Chevrolet Driver: {q1}
+    - Ford Driver: {q2}
+    - Toyota Driver: {q3}
+    - Manufacturer Winner: {q4}
+    - Cars on Lead Lap: {lead_lap}
+
+    🏁 Good luck and may the best team win!
     """
-    msg.attach(MIMEText(html, "html"))
-    try:
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(sender_email, app_password)
-            server.sendmail(sender_email, to_email, msg.as_string())
-    except Exception as e:
-        print(f"❌ Email sending failed: {e}")
+    msg = MIMEText(body)
+    msg["Subject"] = subject
+    msg["From"] = gmail_user
+    msg["To"] = to_email
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(gmail_user, gmail_password)
+        server.send_message(msg)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -70,9 +67,12 @@ def index():
             for e in errors:
                 flash(e, "error")
         else:
-            ts = datetime.now(utc).astimezone(timezone("US/Eastern")).strftime("%Y-%m-%d %H:%M:%S")
+            eastern = timezone("US/Eastern")
+            timestamp = datetime.now(utc).astimezone(eastern).strftime("%Y-%m-%d %H:%M:%S")
+
+            creds_dict = json.loads(os.getenv("GOOGLE_CREDS_JSON"))
             scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-            creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+            creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
             client = gspread.authorize(creds)
             spreadsheet = client.open("Cup Survey")
             target_title = "Chicago 2025"
@@ -91,27 +91,9 @@ def index():
                 )
                 format_cell_range(sheet, "A1:H1", header_format)
 
-            sheet.append_row([ts, email, entry_name, q1, q2, q3, q4, int(lead_lap)])
+            sheet.append_row([timestamp, email, entry_name, q1, q2, q3, q4, int(lead_lap)])
             send_confirmation_email(email, entry_name, q1, q2, q3, q4, int(lead_lap))
             flash("✅ Thank you! Your entry has been received and a confirmation email sent.", "success")
-            session["summary"] = {
-                "name": entry_name,
-                "email": email,
-                "q1": q1,
-                "q2": q2,
-                "q3": q3,
-                "q4": q4,
-                "lead_lap": lead_lap
-}
-            return redirect(url_for("thank_you"))
+            return redirect(url_for("index"))
+
     return render_template("form.html")
-
-@app.route("/thank-you")
-def thank_you():
-    summary = session.pop("summary", None)
-    return render_template("thank_you.html", summary=summary)
-
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
