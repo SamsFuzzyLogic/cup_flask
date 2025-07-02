@@ -138,7 +138,7 @@ def index():
             }
             return redirect(url_for("thank_you"))
 
-    return render_template("driver_form.html", chevy_drivers=chevy_drivers, ford_drivers=ford_drivers, toyota_drivers=toyota_drivers)
+    return render_template("new_body.html", chevy_drivers=chevy_drivers, ford_drivers=ford_drivers, toyota_drivers=toyota_drivers)
 
 @app.route("/thank-you")
 def thank_you():
