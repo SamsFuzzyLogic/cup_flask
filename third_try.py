@@ -105,16 +105,22 @@ def index():
                 format_cell_range(sheet, "A1:H1", header_format)
 
             # Save values
+            # Remove '#' prefix before storing in sheet
+            chevy_display = f"{q1_name}".strip()
+            ford_display = f"{q2_name}".strip()
+            toyota_display = f"{q3_name}".strip()
+            
             sheet.append_row([
                 ts,
                 email,
                 entry_name,
-                f"#{q1_name}",
-                f"#{q2_name}",
-                f"#{q3_name}",
+                chevy_display,
+                ford_display,
+                toyota_display,
                 q4,
                 int(lead_lap)
             ])
+
 
             # Email
             send_confirmation_email(email, entry_name, f"#{q1_number} {q1_name}", f"#{q2_number} {q2_name}", f"#{q3_number} {q3_name}", q4, int(lead_lap))
