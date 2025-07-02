@@ -35,6 +35,8 @@
     </style>
   </head>
   <body>
+    <img src="{{ url_for('static', filename='images/cupcar_logo.png') }}" alt="Cup Car Challenge Logo" class="logo" loading="lazy" />
+
     <h2>Chicago Road Race Challenge</h2>
 
     {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
