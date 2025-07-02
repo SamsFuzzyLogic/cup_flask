@@ -1,0 +1,172 @@
+{
+  "chevrolet_drivers": [
+    {
+      "number": 1,
+      "name": "Ross Chastain"
+    },
+    {
+      "number": 3,
+      "name": "Austin Dillon"
+    },
+    {
+      "number": 5,
+      "name": "Kyle Larson"
+    },
+    {
+      "number": 7,
+      "name": "Justin Haley"
+    },
+    {
+      "number": 8,
+      "name": "Kyle Busch"
+    },
+    {
+      "number": 9,
+      "name": "Chase Elliott"
+    },
+    {
+      "number": 10,
+      "name": "Ty Dillon"
+    },
+    {
+      "number": 13,
+      "name": "Will Brown"
+    },
+    {
+      "number": 16,
+      "name": "AJ Allmendinger"
+    },
+    {
+      "number": 24,
+      "name": "William Byron"
+    },
+    {
+      "number": 33,
+      "name": "Austin Hill"
+    },
+    {
+      "number": 47,
+      "name": "Ricky Stenhouse Jr"
+    },
+    {
+      "number": 48,
+      "name": "Alex Bowman"
+    },
+    {
+      "number": 71,
+      "name": "Michael McDowell"
+    },
+    {
+      "number": 77,
+      "name": "Carson Hocevar"
+    },
+    {
+      "number": 78,
+      "name": "Katherine Legge"
+    },
+    {
+      "number": 88,
+      "name": "Shane Van Gisbergen"
+    },
+    {
+      "number": 99,
+      "name": "Daniel Suarez"
+    }
+  ],
+  "ford_drivers": [
+    {
+      "number": 2,
+      "name": "Austin Cindric"
+    },
+    {
+      "number": 4,
+      "name": "Noah Gragson"
+    },
+    {
+      "number": 6,
+      "name": "Brad Keselowski"
+    },
+    {
+      "number": 12,
+      "name": "Ryan Blaney"
+    },
+    {
+      "number": 17,
+      "name": "Chris Buescher"
+    },
+    {
+      "number": 21,
+      "name": "Josh Berry"
+    },
+    {
+      "number": 22,
+      "name": "Joey Logano"
+    },
+    {
+      "number": 34,
+      "name": "Todd Gilliland"
+    },
+    {
+      "number": 38,
+      "name": "Zane Smith"
+    },
+    {
+      "number": 41,
+      "name": "Cole Custer"
+    },
+    {
+      "number": 51,
+      "name": "Cody Ware"
+    },
+    {
+      "number": 60,
+      "name": "Ryan Preece"
+    },
+    {
+      "number": 66,
+      "name": "Josh Bilicki"
+    }
+  ],
+  "toyota_drivers": [
+    {
+      "number": 11,
+      "name": "Denny Hamlin"
+    },
+    {
+      "number": 19,
+      "name": "Chase Briscoe"
+    },
+    {
+      "number": 20,
+      "name": "Christopher Bell"
+    },
+    {
+      "number": 23,
+      "name": "Bubba Wallace"
+    },
+    {
+      "number": 35,
+      "name": "Riley Herbst"
+    },
+    {
+      "number": 42,
+      "name": "John Hunter Nemechek"
+    },
+    {
+      "number": 43,
+      "name": "Erik Jones"
+    },
+    {
+      "number": 45,
+      "name": "Tyler Reddick"
+    },
+    {
+      "number": 54,
+      "name": "Ty Gibbs"
+    },
+    {
+      "number": 67,
+      "name": "Corey Heim"
+    }
+  ]
+}
