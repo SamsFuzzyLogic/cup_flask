@@ -21,7 +21,7 @@ def send_confirmation_email(to_email, name, q1, q2, q3, q4, lead_lap):
     sender_email = os.getenv("GMAIL_USER")
     app_password = os.getenv("GMAIL_APP_PASSWORD")
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = "✅ Chicago Road Race Challenge – Confirmation"
+    msg["Subject"] = "✅ Sonoma Cup Car Challenge – Confirmation"
     msg["From"] = sender_email
     msg["To"] = to_email
     html = f"""
