@@ -88,7 +88,7 @@ def index():
             creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
             client = gspread.authorize(creds)
             spreadsheet = client.open("Cup Survey")
-            target_title = "Chicago 2025"
+            target_title = "Sonoma 2025"
             worksheet_list = spreadsheet.worksheets()
             sheet = next((ws for ws in worksheet_list if ws.title.strip().lower() == target_title.lower()), None)
             if not sheet:
